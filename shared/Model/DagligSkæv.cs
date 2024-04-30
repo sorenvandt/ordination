@@ -23,7 +23,7 @@ public class DagligSkæv : Ordination {
 
 	public override double doegnDosis() {
 		double totalAntal = doser.Sum(dosis => dosis.antal);
-		int antalTidspunkter = doser.Count;
+		int antalTidspunkter = doser.Count();
 		double gennemsnitligDosis = totalAntal / antalTidspunkter;
 		return gennemsnitligDosis;
 	}

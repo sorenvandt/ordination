@@ -154,11 +154,26 @@ public class DataService
         double antalMorgen, double antalMiddag, double antalAften, double antalNat,
         DateTime startDato, DateTime slutDato)
     {
-        if (antalMorgen <= 0 && antalMiddag <= 0 && antalAften <= 0 && antalNat <= 0)
+        int negativeCount = 0;
+        int zeroCount = 0;
+
+        if (antalMorgen == 0) zeroCount++;
+        else if (antalMorgen < 0) negativeCount++;
+
+        if (antalMiddag == 0) zeroCount++;
+        else if (antalMiddag < 0) negativeCount++;
+
+        if (antalAften == 0) zeroCount++;
+        else if (antalAften < 0) negativeCount++;
+
+        if (antalNat == 0) zeroCount++;
+        else if (antalNat < 0) negativeCount++;
+
+        if (zeroCount > 3 || negativeCount > 0)
         {
-            throw new ArgumentNullException();
+            throw new ArgumentException("Antallet af morgen, middag, aften og nat skal være positive tal, og der må maksimalt være 2 gange 0 doser.");
         }
-        
+
         if (!double.TryParse(antalMorgen.ToString(), out _) ||
             !double.TryParse(antalMiddag.ToString(), out _) ||
             !double.TryParse(antalAften.ToString(), out _) ||
